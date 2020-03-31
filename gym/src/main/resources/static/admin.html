@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>影视后台管理</title>
+<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap/css/admin.css">
+<link rel="stylesheet" href="bootstrap/css/font-awesome.css">
+<script src="jquery.js"></script>
+	<head>
+		<meta charset="UTF-8">
+		<title>影视管理系统 - 后台管理</title>
+		<link rel="stylesheet" href="css/admin.css">
+		<link rel="stylesheet" href="lib/font-awesome/css/font-awesome.css">
+		<style type="text/css">
+			.admin-img {
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+<body>
+<div class="header">
+	<h1>
+		<a href="#">影视管理一个属于自己的影院</a>
+	</h1>
+	<!--<div class="nav">
+    <a target="right" href="#">工作台</a>
+    <a target="right" href="#">报表</a>
+    <a target="right" href="#">客户信息</a>
+    <a target="right" href="#">员工信息</a>
+    <a target="right" href="#">公告信息</a>
+    <a target="right" href="#">发件箱</a>
+</div>-->
+	<div class="user">
+		<a href="#">${admin.account }用户</a> <a href="UserLoginOutController">退出</a>
+	</div>
+</div>
+<div class="main">
+	<ul class="left-side">
+		<li class="menu-title active"><a href="#"> <i
+				class=" fa fa-users"></i>&nbsp;&nbsp;客户管理
+		</a></li>
+		<li class="sub-menu">
+			<ul>
+				<li class="active"><a href="admin/show.do"
+									  target="pageBox"> <i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;用户信息
+				</a>
+				<li class="active"><a href="channelshow.do"
+									  target="pageBox"> <i class=" fa fa-circle-thin"></i>&nbsp;&nbsp;频道
+				</a></li>
+				<li><a href="moldshow.do" target="pageBox"> <i
+						class=" fa fa-circle-thin"></i>&nbsp;&nbsp;类型
+				</a></li>
+				<li><a target="pageBox" href="areashow.do"> <i
+						class=" fa fa-circle-thin"></i>&nbsp;&nbsp;地区信息
+				</a></li>
+
+			</ul>
+		</li>
+		<li class="menu-title"><a href="#"> <i
+				class=" fa fa-file-text"></i>&nbsp;&nbsp;演员导员分配
+		</a></li>
+		<li class="sub-menu">
+			<ul>
+				<li><a target="pageBox" href="actorshow.do"> <i
+						class=" fa fa-circle-thin"></i>&nbsp;&nbsp;演员信息
+				</a></li>
+				<li><a target="pageBox" href="directorshow.do"> <i
+						class=" fa fa-circle-thin"></i>&nbsp;&nbsp;导演信息
+				</a></li>
+
+			</ul>
+		</li>
+		<li class="menu-title"><a href="#"> <i
+				class=" fa fa-sitemap"></i>&nbsp;&nbsp;影视搭配
+		</a></li>
+		<li class="sub-menu">
+			<ul class="menu">
+				<li><a target="pageBox" href="videoshow.do"> <i
+						class=" fa fa-circle-thin"></i>&nbsp;&nbsp;视频类型信息
+				</a></li>
+				<li><a target="pageBox" href="hotshow.do"> <i
+						class=" fa fa-circle-thin"></i>&nbsp;&nbsp;推荐影视信息
+				</a></li>
+				<li><a target="pageBox" href="movieshow.do"> <i
+						class=" fa fa-circle-thin"></i>&nbsp;&nbsp;视频集数信息
+				</a></li>
+				<li><a target="pageBox" href="speakershow.do"> <i
+						class=" fa fa-circle-thin"></i>&nbsp;&nbsp;视频留言信息
+				</a></li>
+			</ul>
+		</li>
+	</ul>
+	<div class="right-side">
+		<iframe class="admin-img" name="pageBox" src="1.jsp"> </iframe>
+		<!-- <div class="footer">智游教育 ©2018 河南智游臻龙教育科技有限公司</div> -->
+	</div>
+</div>
+<script src="lib/jquery/jquery.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
