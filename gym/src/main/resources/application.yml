@@ -90,11 +90,29 @@ logging:
     com.zhiyou100.druid.mapper : debug
     #----------------------------------------------
 qiniu:
-  #  七牛云账号对应的  AccessKey
+
   accessKey: SKaGwe4HkYyakAENL6zxQINkg7J1TPYDlCl17JR3
-  #  七牛云账号对应的  SecretKey
+
   secretKey: 8L5aYhki1rWZUagzR4Ym7LP2Az7K5q9liHRBlw_G
-  #  存储空间名字
+
   bucket: qiniu-springboot
-  #   图片上传成功后的返回地址,我们图片一般上传完之后需要回显
+
   path: qiniu-springboot.s3-cn-east-1.qiniucs.com
+
+
+
+redis:
+    host: 192.168.197.128
+    port: 6379
+
+    password:
+
+    timeout: 2000ms
+
+    max-active: 8
+
+    max-wait: -1ms
+
+    max-idle: 8
+
+    min-idle: 0
