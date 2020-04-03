@@ -74,7 +74,7 @@ p:hover {
 	<div class="header">
 
 		<h1>
-			<a href="#" style="position: relative; top: 15px;">影视后台管理</a>
+			<a href="#" style="position: relative; top: 15px;">健身项目管理系统</a>
 		</h1>
 		<div class="nav" style="margin-left: 170px;">
 			<a target="right" href="#">工作台</a> <a target="right" href="#">报表</a>
@@ -88,13 +88,10 @@ p:hover {
 	<div class="main">
 
 		<div id="left">
-			<div id="header1" class="normal " onclick="headChanged(this,body1)">
-				<i class="glyphicon glyphicon-user"></i>影视管理
-			</div>
 			<div id="body1" class="bnormal">
 				<p>
-					<a target="pageBox" href="backUser/show.do"> 
-						<i class="glyphicon glyphicon-star"></i>后台用户信息
+					<a target="pageBox" href="Cabinet/findAll">
+						<i class="glyphicon glyphicon-star"></i>租柜管理
 					</a>
 				</p>
 				<p>
@@ -155,52 +152,12 @@ p:hover {
 			<div class="footer">智游教育 ©2018 河南智游臻龙教育科技有限公司</div>
 		</div>
 	</div>
-	<script>
-		m1();
-		function m1() {
-			$(body1).hide();
-		}
-		var lastDiv = null;
-		var lastBody = null;
-		function headChanged(div, body) {
-			if (lastDiv != null) {
-				lastDiv.className = "normal";
-				$(lastBody).hide();
-			}
-			div.className = "normal select";
-			lastDiv = div;
-			$(body).show();//显示出来
-			lastBody = body;
-		}
-		$(function() {
-			$(".main_left li").on("click", function() {
-				var address = $(this).attr("data-src");
-				$("iframe").attr("src", address);
-			});
-		});
-		userName();
-		function userName() {
-			$("div")
-			{
-				$.ajax({
-					url : "backUser/sessionVal.do",
-					type : "get",
-					success : function(result) {
-						var backUser = result.data,
-
-						$("font").text(backUser.account);
-					}
-				});
-			}
-
-		}
-	</script>
-
 	<script src="jquery.js"></script>
 	<script src="js/admin.js"></script>
-
-
-
 </body>
+<script>
 
+
+
+</script>
 </html>

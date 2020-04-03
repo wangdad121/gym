@@ -6,6 +6,11 @@ server:
 
 
 spring:
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
+    prefix: classpath:/templates/
+    suffix: .html
 
   datasource:
 
@@ -88,6 +93,9 @@ logging:
   level:
 
     com.zhiyou100.druid.mapper : debug
+
+
+
     #----------------------------------------------
 qiniu:
 
