@@ -1,11 +1,12 @@
 package com.zhiyou.gym.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zhiyou.gym.mapper.GymCabinetMapper;
 import com.zhiyou.gym.pojo.Gym_Cabinet;
 import com.zhiyou.gym.service.GymCabinetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -15,12 +16,17 @@ import java.util.List;
 public class GymCabinetController {
     @Autowired
     GymCabinetService gymCabinetService;
-
+    @Autowired
+    GymCabinetMapper gymCabinetMapper;
 
 
     @RequestMapping(value = "findAll")
-    public List<Gym_Cabinet> findAll() {
-        return gymCabinetService.findAll();
+    public IPage<Gym_Cabinet> findAll(Integer page) {
+        IPage<Gym_Cabinet> Cabinet = new Page<>(page, 3);//参数一是当前页，参数二是每页个数
+        Cabinet = gymCabinetMapper.selectPage(Cabinet, null);
+
+
+        return Cabinet;
     }
 
     @RequestMapping(value = "add")
