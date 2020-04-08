@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+<table id="table1"></table>
+<script>
+    var a=   $.cookie("admin");
+    if(a != 0 && a != undefined)
+    {
+        $.ajax({
+            type:"get",
+            url:"/userDeposit/select",
+            success:function (result) {
+                var $tr1=$("<tr></tr>");
+                var $td1=$("<td></td>").text("编号");
+                var $td2=$("<td></td>").text("充值项目id");
+                var $td3=$("<td></td>").text("充值金额");
+                var $td4=$("<td></td>").text("充值时间");
+                var $td5=$("<td></td>").text("会员id");
+                var $td6=$("<td></td>").text("状态");
+                $tr1.append($td1);
+                $tr1.append($td2);
+                $tr1.append($td3);
+                $tr1.append($td4);
+                $tr1.append($td5);
+                $tr1.append($td6);
+                $(table1).append($tr1);
+                for (var a=0;a<result.data.length;a++){
+                    var despoit=result.data[a];
+                    var $tr2=$("<tr></tr>");
+                    var $td11=$("<td></td>").text(despoit.userDepositNumber);
+                    var $td22=$("<td></td>").text(despoit.userDepositId);
+                    var $td33=$("<td></td>").text(despoit.userDepositMoney+"元");
+                    var $td44=$("<td></td>").text(despoit.userDepositTime);
+                    var $td55=$("<td></td>").text(despoit.name);
+                    var $td66=$("<td></td>").text(despoit.userDepositStatic);
+                    $tr2.append($td11);
+                    $tr2.append($td22);
+                    $tr2.append($td33);
+                    $tr2.append($td44);
+                    $tr2.append($td55);
+                    $tr2.append($td66);
+                    $(table1).append($tr2);
+                }
+            }
+        })
+
+
+    }else {
+        alert("请登录.............")
+        window.location.href = "login.html";
+    }
+
+</script>
+</body>
+</html>

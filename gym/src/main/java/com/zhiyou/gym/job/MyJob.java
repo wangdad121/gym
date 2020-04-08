@@ -1,7 +1,7 @@
 package com.zhiyou.gym.job;
 
-import com.zhiyou.gym.mapper.GymCabinetMapper;
-import com.zhiyou.gym.service.GymCabinetService;
+import com.zhiyou.gym.mapper.UserMapper;
+import com.zhiyou.gym.pojo.User;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
@@ -12,24 +12,20 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class MyJob extends QuartzJobBean {
-
-    private final Logger logger = LoggerFactory.getLogger(MyJob.class);
     @Autowired
-    RedisTemplate redisTemplate;
+    private UserMapper userMapper;
     @Autowired
-    GymCabinetMapper gymCabinetMapper;
+    private RedisTemplate redisTemplate;
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        String key = "Cabinet";
-        ValueOperations<String, String> operations = redisTemplate.opsForValue();
-        if(redisTemplate.hasKey(key)){
-            operations.get(key);
-        }
-        if( redisTemplate.hasKey(key).booleanValue()==false){
-            operations.set(key, String.valueOf(gymCabinetMapper.selectList(null)));
+        String key="user:info";
+        List<User> users = userMapper.selectList(null);
+        ValueOperations op = redisTemplate.opsForValue();
+        op.set(key,users);
 
-        }
+        //System.out.println("===============开始刷新会员信息啦~~~我在job包下");
     }
 }

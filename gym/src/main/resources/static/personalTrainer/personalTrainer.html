@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教练信息</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+<table id="table1"></table>
+<br>当前第<font id="fd"></font>页<br>
+共<font id="fz"></font>页<br>
+<a id="as">上一页</a><br>
+<a id="ax">下一页</a>
+<script>
+    var page=1;
+
+    var a=   $.cookie("admin");
+    if(a != 0 && a != undefined)
+    {
+
+        function qing(){
+            $.ajax({
+                type:"get",
+                url:"/personalTrainer/select",
+                data:{
+                    page:page
+                },
+                success:function (result) {
+                    $(fd).text(result.current);
+                    $(fz).text(result.pages)
+                    var  $a1=$("<a ></a>").text("添加");
+                    $a1.attr("href","/personalTrainer/personalTrainerAdd.html");
+                    $(table1).append($a1);
+                    var $tr1=$("<tr></tr>");
+                    var $td1=$("<td></td>").text("编号");
+                    var $td2=$("<td></td>").text("姓名");
+                    var $td3=$("<td></td>").text("年龄");
+                    var $td4=$("<td></td>").text("标签");
+                    var $td5=$("<td></td>").text("性别");
+                    var $td6=$("<td></td>").text("介绍");
+                    var $td7=$("<td></td>").text("头像");
+                    var $td8=$("<td></td>").text("入职时间");
+                    var $td9=$("<td></td>").text("状态");
+                    $tr1.append($td1);
+                    $tr1.append($td2);
+                    $tr1.append($td3);
+                    $tr1.append($td4);
+                    $tr1.append($td5);
+                    $tr1.append($td6);
+                    $tr1.append($td7);
+                    $tr1.append($td8);
+                    $tr1.append($td9);
+                    $(table1).append($tr1);
+                    for (var a=0;a<result.records.length;a++){
+                        var personalTrainer=result.records[a];
+                        var $tr2=$("<tr></tr>");
+
+                        var $td11=$("<td></td>").text(personalTrainer.personalTrainerNumber);
+                        var $td22=$("<td></td>").text(personalTrainer.personalTrainerName);
+                        var $td33=$("<td></td>").text(personalTrainer.personalTrainerAge);
+                        var $td44=$("<td></td>").text(personalTrainer.personalTrainerHobbit);
+                        var $td55=$("<td></td>").text(personalTrainer.personalTrainerSex);
+                        var $td66=$("<td></td>").text(personalTrainer.personalTrainerSpreak);
+                        var $img1=$("<img>").attr("src","http://"+personalTrainer.personalTrainerPriture);
+                        $img1.attr("width","50px");
+                        var $td88=$("<td></td>").text(personalTrainer.personalTrainerTime);
+                        var $td99=$("<td></td>").text(personalTrainer.personalTrainerStatic);
+                        var $aupdate=$("<a id='pUpdate'></a>").text("修改");
+                        $aupdate.attr("href","personalTrainerUpdate.html?id="+personalTrainer.id);
+                        var  $a2=$("<a ></a>").text("删除");
+                        $a2.attr("onclick","personalTrainerDelete("+personalTrainer.id+")");
+                        var  $a22=$("<a ></a>").text("给他添加私教时段");
+                        $a22.attr("href","/personalTrainerOrder/personalTrainerOrder.html?id="+personalTrainer.id);
+                        $tr2.append($td11);
+                        $tr2.append($td22);
+                        $tr2.append($td33);
+                        $tr2.append($td44);
+                        $tr2.append($td55);
+                        $tr2.append($td66);
+                        $tr2.append($img1);
+                        $tr2.append($td88);
+                        $tr2.append($td99);
+                        $tr2.append($a22);
+                        $tr2.append($a2);
+                        $tr2.append($aupdate)
+                        $(table1).append($tr2);
+                    }
+                }
+            })
+        }qing();
+        //上一页
+        $(as).click(function () {
+            if($(fd).text() > 1 ){
+                page= page-1;
+                $(table1).html("");
+                qing();
+            }
+        })
+        //下一页
+        $(ax).click(function () {
+            var d=$(fd).text();
+            var z=$(fz).text()
+            if( d<z  ){
+                page=page+1;
+                $(table1).html("");
+                qing();
+            }
+        })
+
+
+    }else {
+        alert("请登录.............")
+        window.location.href = "/login.html";
+    }
+    //删除
+    function personalTrainerDelete(a){
+        $.ajax({
+            type:"get",
+            url:"/personalTrainer/delete",
+            data:{
+                id:a
+            },
+            success:function(result){
+                window.location.reload();
+            }
+
+        })
+    }
+
+</script>
+</body>
+</html>

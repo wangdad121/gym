@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>教练你好：--查看你的预约信息</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+<table id="table1"></table>
+<script>
+    var a=   $.cookie("jiaolian");
+    if(a != 0 && a != undefined)
+    {
+       /* function getQueryVariable(variable)
+        {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i=0;i<vars.length;i++) {
+                var pair = vars[i].split("=");
+                if(pair[0] == variable){return pair[1];}
+            }
+            return(false);
+        }
+        //教练的id
+        var id=getQueryVariable("id")*/
+        $.ajax({
+            type:"get",
+            url:"/personalTrainerOrder/selectById",
+            data:{
+                id:a
+            },
+            success:function (result) {
+                var $tr1=$("<tr></tr>");
+                var $x1=$("<td></td>").text("是否空闲");
+                var $td1=$("<td></td>").text("开始时间");
+                var $td2=$("<td></td>").text("结束时间");
+                $($tr1).append($x1)
+                $($tr1).append($td1);
+                $($tr1).append($td2);
+                $(table1).append($tr1);
+                for (var a=0;a<result.length;a++){
+                    var pord=result[a];
+                    var $tr2=$("<tr></tr>");
+                    if(pord.userId == 0){
+                        var $font1=$("<font></font>").text("空闲");
+                        $tr2.append($font1)
+
+                    }else {
+                        var $font1=$("<font></font>").text("已经有预约");
+                        $tr2.append($font1)
+                        var $a33=$("<a></a>").text("取消");
+                        $a33.attr("onclick","personalTrainerOrderAdd("+pord.id+")");
+
+                    }
+                    var $td11=$("<td></td>").text(pord.personalTrainerOrderStartTime);
+                    var $td22=$("<td></td>").text(pord.personalTrainerOrderEndTime);
+                    $($tr2).append($td11);
+                    $($tr2).append($td22);
+                    $($tr2).append($a33)
+                    //通过会员id查询数据
+                    $.ajax({
+                        async:false,
+                        type:"get",
+                        url:"/user/selectById",
+                        data:{
+                            id:pord.userId
+                        },
+                        success:function (result) {
+                            console.log(result)
+                            var $uu1=$("<td></td>").text(result.name);
+                            var $uu2=$("<td></td>").text(result.phone);
+                            $($tr2).append($uu1)
+                            $($tr2).append($uu2)
+                        }
+
+                    })
+
+
+                    $(table1).append($tr2);
+
+                }
+            }
+        })
+    }else {
+        alert("请登录.............")
+        window.location.href = "/login.html";
+    }
+    //取消预约
+    function personalTrainerOrderAdd(p){
+        $.ajax({
+            type:"get",
+            url:"/personalTrainerOrder/update",
+            data:{
+                userId:0,
+                id:p
+            },
+            success:function(result){
+                window.location.reload();
+            }
+
+        })
+    }
+
+</script>
+
+</body>
+</html>

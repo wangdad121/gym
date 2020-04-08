@@ -5,11 +5,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>影视后台管理</title>
+<title>健身项目管理系统</title>
+<script src="jquery.js"></script>
+<script src="jquery.cookie.js"></script>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="bootstrap/css/admin.css">
 <link rel="stylesheet" href="bootstrap/css/font-awesome.css">
-<script src="jquery.js"></script>
+
 <style>
 body {
 	margin: 0px;
@@ -71,85 +73,87 @@ p:hover {
 </head>
 
 <body>
-	<div class="header">
+<div class="header">
+    <div class="user">
+        <font>尊贵的无敌管理员</font>  <a id="a1">退出</a>
+    </div>
+</div>
+<script>
+    var a=   $.cookie("admin");
+    if(a != 0 && a != undefined)
+    {
+        $(a1).click(function () {
+            $.cookie("admin",0);
+            window.location.href = "login.html";
+        })
+    }else {
+        alert("请登录.............")
+        window.location.href = "login.html";
+    }
 
-		<h1>
-			<a href="#" style="position: relative; top: 15px;">健身项目管理系统</a>
-		</h1>
-		<div class="nav" style="margin-left: 170px;">
-			<a target="right" href="#">工作台</a> <a target="right" href="#">报表</a>
-			<a target="right" href="#">客户信息</a> <a target="right" href="#">员工信息</a>
-			<a target="right" href="#">公告信息</a> <a target="right" href="#">发件箱</a>
-		</div>
-		<div class="user">
-			<a href="#"><font></font> 用户</a> <a href="UserLoginOutServlet">退出</a>
-		</div>
-	</div>
+</script>
 	<div class="main">
 
 		<div id="left">
-			<div id="body1" class="bnormal">
-				<p>
-					<a target="pageBox" href="cabinet/cabinet.html">
-						<i class="glyphicon glyphicon-star"></i>租柜管理
-					</a>
-				</p>
-				<p>
-					<a target="pageBox" href="frontUser/show.do"> 
-						<i class="glyphicon glyphicon-star"></i>前台用户信息
-					</a>
-				</p>
-				<p>
-					<a target="pageBox" href="channel/show.do"> 
-						<i class="glyphicon glyphicon-star"></i>频道
-					</a>
-				</p>
-				<p>
-					<a target="pageBox" href="mold/show.do">
-						<i class="glyphicon glyphicon-star"></i>类型
-					</a>
-				</p>
-				<p>
-					<a target="pageBox" href="area/show.do"> 
-						<i class="glyphicon glyphicon-star"></i>区域
-					</a>
-				</p>
-				<p>
-					<a target="pageBox" href="actor/show.do"> 
-						<i class="glyphicon glyphicon-star"></i>演员
-					</a>
-				</p>
-				<p>
-					<a target="pageBox" href="director/show.do"> 
-						<i class="glyphicon glyphicon-star"></i>导演
-					</a>
-				</p>
-				<p>
-					<a target="pageBox" href="video/show.do"> 
-						<i class="glyphicon glyphicon-star"></i>视频
-					</a>
-				</p>
-				<p>
-					<a target="pageBox" href="recommendshow.do"> 
-						<i class="glyphicon glyphicon-star"></i>推荐影视
-					</a>
-				</p>
-				<p>
-					<a target="pageBox" href="movie/show.do"> 
-						<i class="glyphicon glyphicon-star"></i>视频集数
-					</a>
-				</p>
-				<p>
-					<a target="pageBox" href="speaker/show.do"> 
-						<i class="glyphicon glyphicon-star"></i>视频留言
-					</a>
-				</p>
-			</div>
+
+        <div id="body1" class="bnormal">
+            <p>
+                <a target="pageBox" href="cabinfo/cabinfo.html">
+                    <i class="glyphicon glyphicon-star"></i>租柜记录表
+                </a>
+            </p>
+            <p>
+                <a target="pageBox" href="cabinet/cabinet.html">
+                    <i class="glyphicon glyphicon-star"></i>租柜管理
+                </a>
+            </p>
+            <p>
+                <a target="pageBox" href="deposit/despoit.html">
+                    <i class="glyphicon glyphicon-star"></i>会员充值
+                </a>
+            </p>
+            <p>
+                <a target="pageBox" href="region/region.html">
+                    <i class="glyphicon glyphicon-star"></i>前台签到
+                </a>
+            </p>
+            <p>
+                <a target="pageBox" href="perManage/perManage.html">
+                    <i class="glyphicon glyphicon-star"></i>业绩管理
+                </a>
+            </p>
+            <p>
+                <a target="pageBox" href="mainRecord/mainRecord.html">
+                    <i class="glyphicon glyphicon-star"></i>维护记录
+                </a>
+            </p>
+            <p>
+                <a target="pageBox" href="user/user.html">
+                    <i class="glyphicon glyphicon-star"></i>会员管理
+                </a>
+            </p>
+            <p>
+                <a target="pageBox" href="userAdmin/userAdmin.html">
+                    <i class="glyphicon glyphicon-star"></i>会员卡管理
+                </a>
+            </p>
+            <p>
+                <a target="pageBox" href="personalTrainer/personalTrainer.html">
+                    <i class="glyphicon glyphicon-star"></i>教练管理
+                </a>
+            </p>
+            <p>
+                <a target="pageBox" href="leagueClass/leagueClass.html">
+                    <i class="glyphicon glyphicon-star"></i>发布团课
+                </a>
+            </p>
+
+        </div>
 
 		</div>
 		<div class="right-side">
-			<iframe class="admin-img" name="pageBox" src="image/login.jpg"> </iframe>
-			<div class="footer">智游教育 ©2018 河南智游臻龙教育科技有限公司</div>
+			<iframe class="admin-img" name="pageBox" src=""> </iframe>
+			<div class="footer">啊阔健身系统</div>
 		</div>
 	</div>
 	<script src="jquery.js"></script>

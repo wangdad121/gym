@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加修缮记录</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+设备区域:<input type="text" id="i1"><br>
+设备名称:<input type="text" id="i2"><br>
+设备编号:<input type="text" id="i22"><br>
+故障信息:<input type="text" id="i3"><br>
+维修金额:<input type="text" id="i4"><br>
+损坏原因:<input type="text" id="i5"><br>
+负责人:<input type="text" id="i6"><br>
+负责人手机号:<input type="text" id="i7"><br>
+<button id="b1">添加</button>
+<script>
+    $(b1).click(function () {
+        $.ajax({
+            type:"get",
+            url:"/mainRecord/insert",
+            data:{
+                equipmentOn:$(i1).val(),
+                equipmentName:$(i2).val(),
+                equipmentBianhao:$(i22).val(),
+                equipmentMessage:$(i3).val(),
+                mainRecordMoney:$(i4).val(),
+                recordBecouse:$(i5).val(),
+                mainPeopleName:$(i6).val(),
+                mainPeoplePhone:$(i7).val()
+            },
+            success:function () {
+                window.location.href="mainRecord.html";
+            }
+        })
+    })
+</script>
+</body>
+</html>

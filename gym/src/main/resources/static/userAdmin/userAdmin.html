@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>会员卡信息</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+<table id="table1"></table>
+<script>
+    var a=   $.cookie("admin");
+    if(a != 0 && a != undefined)
+    {
+        $.ajax({
+            type:"get",
+            url:"/userAdmin/select",
+            success:function (result) {
+                console.log(result)
+                var  $a1=$("<a ></a>").text("添加");
+                $a1.attr("href","/userAdmin/userAdminAdd.html");
+                $(table1).append($a1);
+                var $tr1=$("<tr></tr>");
+                var $td1=$("<td></td>").text("编号");
+                var $td2=$("<td></td>").text("会员名字");
+                var $td3=$("<td></td>").text("开通时间");
+                var $td4=$("<td></td>").text("注销时间");
+                var $td5=$("<td></td>").text("余额");
+                var $td6=$("<td></td>").text("状态");
+                $tr1.append($td1);
+                $tr1.append($td2);
+                $tr1.append($td3);
+                $tr1.append($td4);
+                $tr1.append($td5);
+                $tr1.append($td6);
+                $(table1).append($tr1);
+                for (var a=0;a<result.length;a++){
+                    var userAdmin=result[a];
+                    var $tr2=$("<tr></tr>");
+                    var $td11=$("<td></td>").text(userAdmin.userAdminNumber);
+                    var $td22=$("<td></td>").text(userAdmin.userName);
+                    var $td33=$("<td></td>").text(userAdmin.startTime);
+                    var $td44=$("<td></td>").text(userAdmin.endTime);
+                    var $td55=$("<td></td>").text(userAdmin.balance);
+                    var $td66=$("<td></td>").text(userAdmin.userAdminStatic);
+                    var  $a2=$("<a ></a>").text("删除");
+                    $a2.attr("onclick","userAdminDelete("+userAdmin.id+")");
+                    $tr2.append($td11);
+                    $tr2.append($td22);
+                    $tr2.append($td33);
+                    $tr2.append($td44);
+                    $tr2.append($td55);
+                    $tr2.append($td66);
+                    $tr2.append($a2);
+                    $(table1).append($tr2);
+                }
+            }
+        })
+
+
+    }else {
+        alert("请登录.............")
+        window.location.href = "/login.html";
+    }
+    //删除
+    function userAdminDelete(a){
+        $.ajax({
+            async:false,
+            type:"get",
+            url:"/user/delete",
+            data:{
+                id:a
+            },
+            success:function(result){
+            }
+
+        })
+        $.ajax({
+            type:"get",
+            url:"/userAdmin/delete",
+            data:{
+                id:a
+            },
+            success:function(result){
+                window.location.reload();
+            }
+
+        })
+    }
+
+</script>
+</body>
+</html>

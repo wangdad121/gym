@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加日程</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+工作安排：<input type="text" id="i1"><br>
+未完成工作内容：<input type="text" id="i2"><br>
+备注：<input type="text" id="i3"><br>
+<button id="b1">添加</button>
+<script> var a=   $.cookie("jiaolian");
+if(a != 0 && a != undefined)
+{
+    $(b1).click(function () {
+        $.ajax({
+            type:"get",
+            url:"/schedule/insert",
+            data:{
+                personalTrainerId:a,
+                scheduleAnpai:$(i1).val(),
+                scheduleNoAnpai:$(i2).val(),
+                scheduleBeizhu:$(i3).val()
+            },
+            success:function () {
+                window.location.href="schedule.html"
+            }
+        })
+
+    })
+
+}else {
+    alert("请登录.............")
+    window.location.href = "/login.html";
+}
+</script>
+</body>
+</html>

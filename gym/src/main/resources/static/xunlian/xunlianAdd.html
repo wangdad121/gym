@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加训练记录</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+器械名称:<input type="text" id="i1"><br>
+训练时长(分钟)<input type="text" id="i2"><br>
+<button id="b1">添加</button>
+    <script>
+        var a= $.cookie("huiyuan");
+        $(b1).click(function () {
+            $.ajax({
+                type:"get",
+                url:"/xunlian/insert",
+                data:{
+                    userId:a,
+                    applianName:$(i1).val(),
+                    xunlianTime:$(i2).val()
+                },
+                success:function () {
+                    window.location.href="xunlian.html";
+                }
+            })
+        })
+    </script>
+</body>
+</html>

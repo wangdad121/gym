@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加潜客</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+    手机号:<input type="text" id="i1"><br>
+    性别:<select id="i2">
+        <option value="男">男</option>
+        <option value="女">女</option>
+    </select><br>
+    备注:<input type="text" id="i3"><br>
+    职业:<input type="text" id="i4"><br>
+    爱好:<input type="text" id="i5"><br>
+    地址:<input type="text" id="i6"><br>
+    状态:<input type="text" id="i7"><br>
+    <button id="b1">添加</button>
+<script>
+    $(b1).click(function () {
+        $.ajax({
+            type:"get",
+            url:"/youkeInto/insert",
+            data:{
+                youkePhone:$(i1).val(),
+                youkeSex:$(i2).val(),
+                youkeBeizhu:$(i3).val(),
+                youkeZhiye:$(i4).val(),
+                youkeHobbit:$(i5).val(),
+                youkeAdress:$(i6).val(),
+                youkeStatic:$(i7).val()
+            }
+        })
+
+        window.location.href = "youke.html";
+    })
+</script>
+</body>
+</html>

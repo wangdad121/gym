@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>业绩查询</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+<table id="table1"></table>
+<script>
+    var a=   $.cookie("admin");
+    if(a != 0 && a != undefined)
+    {
+        $.ajax({
+            type:"get",
+            url:"/perManage/selectAll",
+            success:function (result) {
+                var $tr1=$("<tr></tr>");
+                var $td1=$("<td></td>").text("编号");
+                var $td22=$("<td></td>").text("教练id");
+                var $td2h=$("<td></td>").text("会员id");
+                var $td2hl=$("<td></td>").text("商品类型");
+
+                var $td3=$("<td></td>").text("开通时间");
+                var $td5=$("<td></td>").text("余额");
+                var $td6=$("<td></td>").text("状态");
+                var $td66=$("<td></td>").text("备注");
+                $tr1.append($td1);
+                $tr1.append($td22);
+                $tr1.append($td2h);
+                $tr1.append($td2hl);
+                $tr1.append($td5);
+
+                $tr1.append($td3);
+                $tr1.append($td6);
+                $tr1.append($td66);
+
+                $(table1).append($tr1);
+                for (var a=0;a<result.length;a++){
+                    var p=result[a];
+                    var $tr2=$("<tr></tr>");
+                    var $td18=$("<td></td>").text(p.preManageNumber);
+                    var $td28=$("<td></td>").text(p.personalTrainerId);
+                    var $td38=$("<td></td>").text(p.userId);
+                    var $td48=$("<td></td>").text(p.personalTrainerType);
+                    var $td58=$("<td></td>").text(p.personalTrainerMoney);
+                    var $td68=$("<td></td>").text(p.personalTrainerTime);
+                    var $td78=$("<td></td>").text(p.personalTrainerStatic);
+                    var $td88=$("<td></td>").text(p.personalTrainerSpeak);
+                    $tr2.append($td18);
+                    $tr2.append($td28);
+                    $tr2.append($td38);
+                    $tr2.append($td48);
+                    $tr2.append($td58);
+                    $tr2.append($td68);
+                    $tr2.append($td78);
+                    $tr2.append($td88);
+                    $(table1).append($tr2);
+                }
+            }
+        })
+
+
+    }else {
+        alert("请登录.............")
+        window.location.href = "/login.html";
+    }
+
+
+</script>
+</body>
+</html>

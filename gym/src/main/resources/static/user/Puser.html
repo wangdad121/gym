@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>会员信息</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+<table id="table1"></table>
+<script>
+    var a=   $.cookie("jiaolian");
+    if(a != 0 && a != undefined)
+    {
+        $.ajax({
+            async:false,
+            type:"get",
+            url:"/personalTrainerOrder/selectByPerOrderId",
+            data:{id:a},
+            success:function (result) {
+                console.log(result)
+                var $tr1=$("<tr></tr>");
+                var $td1=$("<td></td>").text("姓名");
+                var $td2=$("<td></td>").text("性别");
+                var $td3=$("<td></td>").text("手机号");
+                var $td4=$("<td></td>").text("添加时间");
+                var $td5=$("<td></td>").text("描述");
+                var $td6=$("<td></td>").text("职业");
+                var $td7=$("<td></td>").text("爱好");
+                var $td8=$("<td></td>").text("地址");
+                var $td9=$("<td></td>").text("状态");
+                $tr1.append($td1);
+                $tr1.append($td2);
+                $tr1.append($td3);
+                $tr1.append($td4);
+                $tr1.append($td5);
+                $tr1.append($td6);
+                $tr1.append($td7);
+                $tr1.append($td8);
+                $tr1.append($td9);
+                $(table1).append($tr1);
+                for (var a=0;a<result.length;a++){
+                    var user=result[a];
+                    var $tr2=$("<tr></tr>");
+
+                    var $td11=$("<td></td>").text(user.name);
+                    var $td22=$("<td></td>").text(user.sex);
+                    var $td33=$("<td></td>").text(user.phone);
+                    var $td44=$("<td></td>").text(user.time);
+                    var $td55=$("<td></td>").text(user.speak);
+                    var $td66=$("<td></td>").text(user.Occupation);
+                    var $td77=$("<td></td>").text(user.hobbit);
+                    var $td88=$("<td></td>").text(user.address);
+                    var $td99=$("<td></td>").text(user.userStatic);
+                    $tr2.append($td11);
+                    $tr2.append($td22);
+                    $tr2.append($td33);
+                    $tr2.append($td44);
+                    $tr2.append($td55);
+                    $tr2.append($td66);
+                    $tr2.append($td77);
+                    $tr2.append($td88);
+                    $tr2.append($td99);
+                    $(table1).append($tr2);
+                }
+            }
+        })
+
+
+    }else {
+        alert("请登录.............")
+        window.location.href = "/login.html";
+    }
+
+
+</script>
+</body>
+</html>

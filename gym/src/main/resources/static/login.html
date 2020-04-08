@@ -2,37 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>健身登录系统</title>
-    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <title>Title</title>
+    <script src="jquery.js"></script>
+    <script src="jquery.cookie.js"></script>
 </head>
 <body>
-<h1>
-    <a href="#">健身系统网站登录</a>
-</h1>
-<p>账号:<input type="text" name="account" id="ac"></p>
-
-<p>密码:<input type="password" name="password" id="pa"></p>
-<button id="login">登录</button>
+<h5 id="h1" style="color:brown"></h5>
+输入账号:<input id="i1" type="text" name="account"><br>
+输入密码:<input id="i2" type="text" name="password"><br>
+<button id="b1">登陆</button>
 </body>
 <script>
 
+    //开始登陆
 
-    $("#login").click(function () {
+    $(b1).click(function(){
         $.ajax({
-           type:"GET",
-            url:"superuser/useraccount.do",
-            data:{account:$(ac).val(),password:$(pa).val()},
-            success:function (result) {
-                if(result.code !=200){
-                    alert(result.msg)
+            type:"get",
+            url:"http://localhost:8000/adminLogin/login",
+            data:{
+                account:$(i1).val(),
+                password:$(i2).val()
+            },
+            success:function(result){
+                console.log(result)
+                if(result.code == 2000 ){
+                   if(result.msg == "教练"){
+                       $.cookie("jiaolian",result.data.id);
+                       window.location.href = "p.html";
+                   }
+                    if(result.msg == "会员"){
+                        $.cookie("huiyuan",result.data.id);
+                        window.location.href = "user.html";
+                    }
+                    if(result.msg == "超级管理员"){
+                        $.cookie("admin",result.data.id);
+                        window.location.href = "admin.html";
+                    }
+                }else {
+                    $(h1).text(result.msg);
+                }
 
-                }
-                else {
-                    window.location.href = 'admin.html';
-                }
+
+                console.log(result);
             }
+
         })
+
+
     })
+
 
 
 </script>

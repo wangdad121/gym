@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
@@ -41,51 +42,12 @@ public class RedisTemplateConfig {
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }
+
     /**
      * 创建ValueOperations<String, Object>对象,存储到IOC容器中
      */
     @Bean
-    public ValueOperations<String, Object> valueOperations(RedisTemplate<String,Object> redisTemplate){
-         return redisTemplate.opsForValue();
-    }
-
-    /**
-     * 创建操作list类型对象
-     * @param redisTemplate
-     * @return
-     */
-    @Bean
-    public ListOperations<String, Object> listOperations(RedisTemplate<String,Object> redisTemplate){
-         return redisTemplate.opsForList();
-    }
-
-    /**
-     * 创建操作set类型对象
-     * @param redisTemplate
-     * @return
-     */
-    @Bean
-    public SetOperations<String, Object> setOperations(RedisTemplate<String,Object> redisTemplate){
-         return redisTemplate.opsForSet();
-    }
-
-    /**
-     * 创建操作zset类型对象
-     * @param redisTemplate
-     * @return
-     */
-    @Bean
-    public ZSetOperations<String, Object> zsetOperations(RedisTemplate<String,Object> redisTemplate){
-         return redisTemplate.opsForZSet();
-    }
-
-    /**
-     * 操作hash类型对象
-     * @param redisTemplate
-     * @return
-             */
-    @Bean
-    public HashOperations<String, Object, Object> hashOperations(RedisTemplate<String,Object> redisTemplate){
-        return redisTemplate.opsForHash();
+    public ValueOperations<String, String> valueOperations(RedisTemplate redisTemplate){
+        return redisTemplate.opsForValue();
     }
 }

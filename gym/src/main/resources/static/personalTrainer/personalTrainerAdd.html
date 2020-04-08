@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加教练</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+
+<form id="foom" enctype="multipart/form-data">
+    名字：<input type="text" id="i1"><br>
+    年龄：<input type="text" id="i2"><br>
+    标签：<input type="text" id="i3"><br>
+    性别：<select id="i4">
+    <option value="男">男</option>
+    <option value="女">女</option>
+</select><br>
+    介绍：<input type="text" id="i5"><br>
+  添加你的头像:  <input type="file" name="file" id="file"><br>
+    入职时间：<input type="date" id="i6"><br>
+    状态：<input type="text" id="i7"><br>
+    <button id="b3">添加</button>
+</form>
+<script>
+
+    //添加头像
+    $(b3).click(function(){
+        var formData = new FormData();
+        formData.append("personalTrainerName",$(i1).val());
+        formData.append("personalTrainerAge",$(i2).val());
+        formData.append("personalTrainerHobbit",$(i3).val());
+        formData.append("personalTrainerSex",$(i4).val());
+        formData.append("personalTrainerSpreak",$(i5).val());
+        formData.append("personalTrainerTime",$(i6).val());
+        formData.append("personalTrainerStatic",$(i7).val());
+        formData.append("file", $("#file")[0].files[0]);
+
+        $.ajax({
+            type:"post",
+            url:"/personalTrainer/insertHead",
+            data:formData,
+            dataType:'json',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success:function(result){
+                alert(result);
+
+            },error:function(result){
+                console.log(result)
+            },
+            async:false
+        })
+        alert("添加成功")
+        window.location.href="personalTrainer.html";
+        return false;
+        //这里是添加头像 可以用异步请求async:false 或者弹框alert("修改成功")
+
+
+    })
+</script>
+
+
+
+</body>
+</html>

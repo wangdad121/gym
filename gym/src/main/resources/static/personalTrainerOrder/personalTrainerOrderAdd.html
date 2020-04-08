@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加时段</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+开始时间:<input type="text" id="i1"><br>
+结束时间:<input type="text" id="i2"><br>
+<button id="b1">添加</button>
+<script>
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+    //教练id
+    var id=getQueryVariable("id")
+    $(b1).click(function () {
+
+        $.ajax({
+            type:"get",
+            url:"/personalTrainerOrder/insertshiduan",
+            data:{
+                personalTrainerId:id,
+                personalTrainerOrderStartTime:$(i1).val(),
+                personalTrainerOrderEndTime:$(i2).val()
+            },success:function () {
+                window.location.href="personalTrainerOrder.html?id="+id;
+            }
+        })
+    })
+
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

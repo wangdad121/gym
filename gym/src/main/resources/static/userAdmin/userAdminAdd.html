@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>会员卡添加</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+那位潜客想变成会员：<select id="s1"></select><br>
+开通时间:<input type="date" id="i1"><br>
+注销时间：<input type="date" id="i2"><br>
+余额：<input type="text" id="i3"><br>
+状态:<input type="text" id="i4"><br>
+<button id="b1">添加</button>
+<script>
+    $.ajax({
+        type:"get",
+        url:"/youkeInto/select",
+        success:function (result) {
+            for (var a=0;a<result.data.length;a++){
+                var youke=result.data[a];
+                var $op=$("<option></option>").text(youke.youkePhone);
+                $op.attr("value",youke.id);
+                $(s1).append($op);
+            }
+        }
+    })
+    $(b1).click(function () {
+        // 通过潜客id查询信息 先把信息添加到user表中然后返回这条数据id 然后才可以添加会员卡信息 添加成功后跳转user修改页面补全信息
+        //1通过潜客id查询信息
+        $.ajax({
+            async:false,
+            type:"get",
+            url:"/youkeInto/selectById",
+            data:{
+                id:$(s1).val()
+            },success:function (result) {
+                console.log(result)
+                //2先把信息添加到user表中然后返回这条数据id
+                $.ajax({
+                    async:false,
+                    type:"get",
+                    url:"/user/insertFId",
+                    data:{
+                        sex:result.youkeSex,
+                        phone:result.youkePhone,
+                        time:result.youkeTime,
+                        speak:result.youkeBeizhu,
+                        Occupation:result.youkeZhiye,
+                        hobbit:result.youkeHobbit,
+                        address:result.youkeAdress,
+                        UserStatic:result.youkeStatic
+                    },success:function (result1) {
+                        console.log(result1)
+                        //3 (result返回的是user这条数据的id)然后才可以添加会员卡信息
+                        $.ajax({
+                            async:false,
+                            type:"get",
+                            url:"/userAdmin/insert",
+                            data:{
+                                userId:result1,
+                                startTime:$(i1).val(),
+                                endTime:$(i2).val(),
+                                balance:$(i3).val(),
+                                userAdminStatic:$(i4).val()
+                            },
+                            success:function () {
+                                //添加成功后跳转user修改页面补全信息
+                                //添加完会员卡之后删除潜客信息
+                                $.ajax({
+                                    type:"post",
+                                    url:"/youkeInto/delete",
+                                    data:{
+                                        id:$(s1).val()
+                                    }
+                                })
+                                alert("添加成功请补全会员信息")
+                                window.location.href="/user/userUpdate.html?id="+result1
+                            }
+                        })
+                    }
+
+                })
+            }
+        })
+
+
+
+
+
+    })
+
+</script>
+</body>
+</html>

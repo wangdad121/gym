@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改教练</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+<form id="foom" enctype="multipart/form-data">
+    <input id="id" type="hidden">
+    <img id="img1" width="100px">
+    修改你的头像:  <input type="file" name="file" id="file"><br>
+    名字：<input type="text" id="i1"><br>
+    年龄：<input type="text" id="i2"><br>
+    标签：<input type="text" id="i3"><br>
+    性别：男<input type='radio' name="sex" value="男" id="r1"/> 女<input id="r2" type="radio" name="sex" value="女"><br>
+    介绍：<input type="text" id="i5"><br>
+    入职时间：<input type="date" id="i6"><br>
+    状态：<input type="text" id="i7"><br>
+    <button id="b3">修改</button>
+</form>
+<script>
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+    var id=getQueryVariable("id")
+    //默认请求查询教练信息
+      $.ajax({
+          type:"get",
+          url:"/personalTrainer/selectById",
+          data:{
+              id:id
+          },success:function (personalTrainer) {
+              $("#id").val(personalTrainer.id);
+              $(i1).val(personalTrainer.personalTrainerName);
+              $(i2).val(personalTrainer.personalTrainerAge);
+              $(i3).val(personalTrainer.personalTrainerHobbit);
+              if (personalTrainer.personalTrainerSex =="男"){
+                  $(r1).attr("checked","checked");
+              }
+              if (personalTrainer.personalTrainerSex =="女"){
+                  $(r2).attr("checked","checked");
+              }
+              $(i5).val(personalTrainer.personalTrainerSpreak);
+              $(img1).attr("src","http://"+personalTrainer.personalTrainerPriture);
+              $(i6).val(personalTrainer.personalTrainerTime);
+              $(i7).val(personalTrainer.personalTrainerStatic);
+          }
+      })
+    //修改信息（包括头像）
+    $(b3).click(function(){
+     var aaa=   $('input:radio:checked').val();
+        var formData = new FormData();
+        formData.append("id",$("#id").val());
+        formData.append("personalTrainerName",$(i1).val());
+        formData.append("personalTrainerAge",$(i2).val());
+        formData.append("personalTrainerHobbit",$(i3).val());
+        formData.append("personalTrainerSex",aaa);
+        formData.append("personalTrainerSpreak",$(i5).val());
+        formData.append("personalTrainerTime",$(i6).val());
+        formData.append("personalTrainerStatic",$(i7).val());
+        formData.append("file", $("#file")[0].files[0]);
+
+        $.ajax({
+            type:"post",
+            url:"/personalTrainer/update",
+            data:formData,
+            dataType:'json',
+            cache: false,
+            processData: false,
+            contentType: false,
+            success:function(result){
+                alert(result);
+
+            },error:function(result){
+                console.log(result)
+            },
+            async:false
+        })
+        alert("修改成功成功")
+        window.location.href="personalTrainer.html";
+        return false;
+        //这里是添加头像 可以用异步请求async:false 或者弹框alert("修改成功")
+
+
+    })
+
+</script>
+</body>
+</html>

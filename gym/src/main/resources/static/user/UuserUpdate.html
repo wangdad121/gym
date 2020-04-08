@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改会员信息</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+姓名：<input type="text" id="i1"><br>
+性别    男<input type='radio' name="sex" value="男" id="r1"/> 女<input id="r2" type="radio" name="sex" value="女"><br>
+手机号：<input type="text" id="i3"><br>
+开通时间：<input type="date" id="idate"><br>
+描述（备注）：<input type="text" id="i4"><br>
+职业：<input type="text" id="i5"><br>
+爱好：<input type="text" id="i6"><br>
+地址：<input type="text" id="i7"><br>
+状态：<input type="text" id="i8"><br>
+<button id="b1">修改</button>
+<script>
+   var id=$.cookie("huiyuan");
+    //通过会员id查询数据
+    $.ajax({
+        type:"get",
+        url:"/user/selectById",
+        data:{
+            id:id
+        },
+        success:function (result) {
+            console.log(result)
+            $(i1).val(result.name);
+            if (result.sex =="男"){
+                $(r1).attr("checked","checked");
+            }
+            if (result.sex =="女"){
+                $(r2).attr("checked","checked");
+            }
+            $(i3).val(result.phone);
+            $(idate).val(result.time);
+            $(i4).val(result.speak);
+            $(i5).val(result.occupation);
+            $(i6).val(result.hobbit);
+            $(i7).val(result.address);
+            $(i8).val(result.userStatic);
+
+        }
+
+    })
+    //修改会员
+    $(b1).click(function () {
+        $.ajax({
+            type:"get",
+            url:"/user/update",
+            data:{
+                id:id,
+                name:$(i1).val(),
+                sex:$('input[type="radio"]:checked').val(),
+                phone:$(i3).val(),
+                time:$(idate).val(),
+                speak:$(i4).val(),
+                Occupation:$(i5).val(),
+                hobbit:$(i6).val(),
+                address:$(i7).val(),
+                UserStatic:$(i8).val()
+            },
+            success:function (re) {
+                window.location.href="/user.html";
+            }
+        })
+    })
+
+
+
+
+
+</script>
+</body>
+</html>

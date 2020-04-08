@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前台签到Add</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+会员  <input name="a" type="radio" value="1" id="i1" /><select id="s1"></select><br>
+教练  <input  name="a"  type="radio" value="2"  id="i2"/><select id="s2"></select><br>
+游客<input  name="a" type="radio" value="3" id="i3" /><select id="s3"></select><br>
+状态:<input type="text" id="t1"><br>
+<button id="b1">添加</button>
+<script>
+    $(s1).hide();
+    $(s2).hide();
+    $(s3).hide();
+    $('input[name="a"]').change(function(){
+        if ($('input[name="a"][value="1"]').prop("checked")) {
+            $(s2).hide();
+            $(s3).hide();
+            $(s1).show();
+            $.ajax({
+                type:"get",
+                url:"/user/select",
+                success:function (result) {
+                    for (var a=0;a<result.length;a++) {
+                        var user = result[a];
+                        var $op1 = $("<option></option>").text(user.name);
+                        $op1.attr("value", user.id);
+                        $(s1).append($op1);
+                    }
+                }
+            })
+        }
+        if ($('input[name="a"][value="2"]').prop("checked")) {
+            $(s2).show();
+            $(s3).hide();
+            $(s1).hide();
+            $.ajax({
+                type:"get",
+                url:"/personalTrainer/select",
+                success:function (result) {
+                    for (var a=0;a<result.records.length;a++) {
+                        var p = result.records[a];
+                        var $op2 = $("<option></option>").text(p.personalTrainerName);
+                        $op2.attr("value", p.id);
+                        $(s2).append($op2);
+                    }
+                }
+            })
+        }
+        if ($('input[name="a"][value="3"]').prop("checked")) {
+            $(s2).hide();
+            $(s3).show();
+            $(s1).hide();
+            $.ajax({
+                type:"get",
+                url:"/youkeInto/select",
+                success:function (result) {
+                    for (var a=0;a<result.data.length;a++) {
+                        var youke = result.data[a];
+                        var $op3 = $("<option></option>").text(youke.youkePhone);
+                        $op3.attr("value", youke.id);
+                        $(s3).append($op3);
+                    }
+                }
+            })
+        }
+    })
+
+    $(b1).click(function () {
+        var aa=0;
+        var bb="";
+        if ($('input[name="a"][value="1"]').prop("checked")) {
+            aa=$(s1).val();
+            bb="会员";
+        }
+        if ($('input[name="a"][value="2"]').prop("checked")) {
+            aa=$(s2).val();
+            bb="教练";
+        }
+        if ($('input[name="a"][value="3"]').prop("checked")) {
+            aa=$(s3).val();
+            bb="游客";
+        }
+        $.ajax({
+            type:"get",
+            url:"/region/insert",
+            data:{
+                regionId:aa,
+                regionRemark:bb,
+                regionStatic:$(t1).val()
+            },
+            success:function () {
+                window.location.href="region.html";
+            }
+        })
+    })
+</script>
+
+</body>
+</html>

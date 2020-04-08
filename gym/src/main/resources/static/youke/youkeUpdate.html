@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+手机号<input type='text' id="i1"/><br>
+性别    男<input type='radio' name="sex" value="男" id="r1"/> 女<input id="r2" type="radio" name="sex" value="女"><br>
+备注<input type='text' id="i3"/><br>
+职业<input type='text' id="i4"/><br>
+爱好<input type='text' id="i5"/><br>
+地址<input type='text' id="i6"/><br>
+状态<input type='text' id="i7"/><br>
+<button id="b1">修改</button>
+<script>
+    function getQueryVariable(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+    var id=getQueryVariable("id")
+    $.ajax({
+        type:"get",
+        url:"/youkeInto/selectById",
+        data:{
+            id:id
+        },success:function (result) {
+           $(i1).val(result.youkePhone);
+           if (result.youkeSex =="男"){
+               $(r1).attr("checked","checked");
+           }
+            if (result.youkeSex =="女"){
+                $(r2).attr("checked","checked");
+            }
+            $(i3).val(result.youkeBeizhu);
+            $(i4).val(result.youkeZhiye);
+            $(i5).val(result.youkeHobbit);
+            $(i6).val(result.youkeAdress);
+            $(i7).val(result.youkeStatic);
+        }
+    })
+$(b1).click(function () {
+    $.ajax({
+        type:"get",
+        url:"/youkeInto/update",
+        data:{
+            id:id,
+            youkePhone:$(i1).val(),
+            youkeSex:$('input[type="radio"]:checked').val(),
+            youkeBeizhu:$(i3).val(),
+            youkeZhiye:$(i4).val(),
+            youkeHobbit:$(i5).val(),
+            youkeAdress:$(i6).val(),
+            youkeStatic:$(i7).val()
+        },success:function () {
+            window.location.href="youke.html";
+        }
+    })
+})
+
+
+</script>
+
+</body>
+</html>

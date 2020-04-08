@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查看日程</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+<table id="table1"></table>
+<script>
+    var a=   $.cookie("jiaolian");
+    if(a != 0 && a != undefined)
+    {
+        $.ajax({
+            type:"get",
+            url:"/schedule/select",
+            data:{
+                id:a
+            },
+            success:function (result) {
+                var  $a1=$("<a ></a>").text("添加");
+                $a1.attr("href","/schedule/scheduleAdd.html");
+                $(table1).append($a1);
+                var $tr1=$("<tr></tr>");
+               var $td1=$("<td></td>").text("编号");
+                var $td2=$("<td></td>").text("教练");
+                var $td3=$("<td></td>").text("工作安排");
+                var $td4=$("<td></td>").text("未完成工作内容");
+                var $td5=$("<td></td>").text("备注");
+                $tr1.append($td1);
+                $tr1.append($td2);
+                $tr1.append($td3);
+                $tr1.append($td4);
+                $tr1.append($td5);
+                $(table1).append($tr1);
+                for (var a=0;a<result.length;a++){
+                    var s=result[a];
+                    var $tr2=$("<tr></tr>");
+                    var $td11=$("<td></td>").text(s.scheduleNumber);
+                    var $td22=$("<td></td>").text(s.personalTrainerName);
+                    var $td33=$("<td></td>").text(s.scheduleAnpai);
+                    var $td44=$("<td></td>").text(s.scheduleNoAnpai);
+                    var $td55=$("<td></td>").text(s.scheduleBeizhu);
+                    var $aupdate=$("<a id='pUpdate'></a>").text("修改");
+                    $aupdate.attr("href","scheduleUpdate.html?id="+s.id);
+                    var  $a2=$("<a ></a>").text("删除");
+                    $a2.attr("onclick","sDelete("+s.id+")");
+                    $tr2.append($td11);
+                    $tr2.append($td22);
+                    $tr2.append($td33);
+                    $tr2.append($td44);
+                    $tr2.append($td55);
+                    $tr2.append($aupdate);
+                    $tr2.append($a2);
+                    $(table1).append($tr2);
+                }
+            }
+        })
+
+
+    }else {
+        alert("请登录.............")
+        window.location.href = "/login.html";
+    }
+    //删除
+    function sDelete(a){
+        $.ajax({
+            type:"get",
+            url:"/schedule/delete",
+            data:{
+                id:a
+            },
+            success:function(result){
+                window.location.reload();
+            }
+
+        })
+    }
+
+</script>
+</body>
+</html>

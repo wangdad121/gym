@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加租柜记录信息</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+选择会员：
+<select id="s1">
+
+</select>
+<br>
+选择柜子：
+<select id="s2">
+
+</select>
+<br>
+选择年月：
+<select id="s3">
+    <option value="12">一年     398</option>
+    <option value="6">半年     288</option>
+    <option value="3">三个月     138</option>
+    <option value="1">一个月     58</option>
+</select>
+<br><button id="b1">添加</button>
+<script>
+    //查询柜子
+    $.ajax({
+        type:"get",
+        url:"/gymCabinet/gymsk",
+        success:function (result) {
+            for (var a=0;a<result.length;a++) {
+                var cabinet = result[a];
+                var $op2=$("<option></option>").text(cabinet.cabNumber);
+                $op2.attr("value",cabinet.id);
+                $(s2).append($op2);
+
+            }
+        }
+    })
+    //查询会员
+    $.ajax({
+        type:"get",
+        url:"/user/select",
+        success:function (result) {
+            for (var a=0;a<result.length;a++) {
+                var user = result[a];
+                var $op1=$("<option></option>").text(user.name);
+                $op1.attr("value",user.id);
+                $(s1).append($op1);
+
+            }
+        }
+    })
+    $(b1).click(function () {
+        $.ajax({
+            type:"get",
+            url:"/GymCabInfo/insert",
+            data:{
+                cabInfoDuration:$(s3).val(),
+                cabInfoMember:$(s1).val(),
+                cabCabinetId:$(s2).val()
+            },
+            success:function (result) {
+                window.location.href = "cabinfo.html";
+            }
+        })
+    })
+</script>
+</body>
+</html>

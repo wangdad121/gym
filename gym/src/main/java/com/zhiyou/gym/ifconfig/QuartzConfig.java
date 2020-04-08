@@ -1,12 +1,14 @@
 package com.zhiyou.gym.ifconfig;
 
 import com.zhiyou.gym.job.MyJob;
+
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.quartz.QuartzJobBean;
 
 @Configuration
-public class QuartzConfig {
+public class QuartzConfig  {
     /**
      * 创建JobDatile对象
      * @Bean 是什么作用？你能说出来多少？
@@ -23,7 +25,7 @@ public class QuartzConfig {
     @Bean
     public Trigger trigger(){
         //设置任务的执行方式
-        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(2222).repeatForever();
+        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).repeatForever();
         return TriggerBuilder.newTrigger().
                 forJob(myJob()).
                         withIdentity("myTriger").
@@ -35,4 +37,6 @@ public class QuartzConfig {
                         //构建触发器
                         build();
     }
+
+
 }

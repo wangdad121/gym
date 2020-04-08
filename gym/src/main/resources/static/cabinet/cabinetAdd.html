@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>租柜信息</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+请选择:
+<select id="s1">
+    <option value="0">40 * 40 * 50</option>
+    <option value="1">80 * 80 *100</option>
+</select><br>
+<select id="s2">
+    <option value="1">空闲</option>
+    <option value="2">已租</option>
+    <option value="3">故障</option>
+</select><br>
+<button id="b1">添加</button>
+</body>
+<script>
+    console.log($(s1).val())
+    $(b1).click(function () {
+        $.ajax({
+            type:"post",
+            url:"/gymCabinet/add",
+            data:{
+                cabCapaity:$(s1).val(),
+                cabStatus :$(s2).val()
+            }
+        })
+        window.location.href = "cabinet.html";
+    })
+
+
+</script>
+</html>

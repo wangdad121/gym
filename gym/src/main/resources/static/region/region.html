@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+<table id="table1"></table>
+<script>
+    var a=   $.cookie("admin");
+    if(a != 0 && a != undefined)
+    {
+        $.ajax({
+            type:"get",
+            url:"/region/select",
+            success:function (result) {
+                var  $a1=$("<a ></a>").text("添加");
+                $a1.attr("href","/region/regionAdd.html");
+                $(table1).append($a1);
+                var $tr1=$("<tr></tr>");
+                var $td1=$("<td></td>").text("编号");
+                var $td2=$("<td></td>").text("签到时间");
+                var $td3=$("<td></td>").text("签到人id");
+                var $td4=$("<td></td>").text("签到备注");
+                var $td5=$("<td></td>").text("状态");
+                $tr1.append($td1);
+                $tr1.append($td2);
+                $tr1.append($td3);
+                $tr1.append($td4);
+                $tr1.append($td5);
+                $(table1).append($tr1);
+                for (var a=0;a<result.data.length;a++){
+                    var region=result.data[a];
+                    var $tr2=$("<tr></tr>");
+                    var $td11=$("<td></td>").text(region.regionNumber);
+                    var $td22=$("<td></td>").text(region.regionTime);
+                    var $td33=$("<td></td>").text(region.regionId);
+                    var $td44=$("<td></td>").text(region.regionRemark);
+                    var $td55=$("<td></td>").text(region.regionStatic);
+                    var  $a2=$("<a ></a>").text("删除");
+                    $a2.attr("onclick","regionDelete("+region.id+")");
+                    $tr2.append($td11);
+                    $tr2.append($td22);
+                    $tr2.append($td33);
+                    $tr2.append($td44);
+                    $tr2.append($td55);
+                    $tr2.append($a2);
+                    $(table1).append($tr2);
+                }
+            }
+        })
+
+
+    }else {
+        alert("请登录.............")
+        window.location.href = "/login.html";
+    }
+    //删除
+    function regionDelete(a){
+        $.ajax({
+            type:"get",
+            url:"/region/delete",
+            data:{
+                id:a
+            },
+            success:function(result){
+                window.location.reload();
+            }
+
+        })
+    }
+
+</script>
+</body>
+</html>

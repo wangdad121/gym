@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加团课信息</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+课程名称:<input type="text" id="i1"><br>
+课程类型:<select id="s1">
+    <option value="有氧">有氧</option>
+    <option value="塑性">塑性</option>
+    <option value="减脂">减脂</option>
+</select><br>
+开始时间:<input type="date" id="i3"><br>
+结束时间:<input type="date" id="i4"><br>
+代课教练:<select id="s2"></select><br>
+课程状态:<select id="s3">
+    <option>报名中</option>
+    <option>进行中</option>
+    <option>已结束</option>
+</select><br>
+数据状态:<input type="text" id="i7"><br>
+<button id="b1">添加</button>
+<script>
+    $.ajax({
+        type:"get",
+        url:"/personalTrainer/selectAll",
+        success:function (result) {
+            for (var a=0;a<result.length;a++){
+                var pp=result[a];
+                var $op=$("<option></option>>").text(pp.personalTrainerName);
+                $op.attr("value",pp.id);
+                $(s2).append($op);
+            }
+        }
+    })
+    $(b1).click(function () {
+        $.ajax({
+            type:"get",
+            url:"/leagueClass/insert",
+            data:{
+                leagueClassName:$(i1).val(),
+                leagueClassType:$(s1).val(),
+                leagueClassStartTime:$(i3).val(),
+                leagueClassEndTime:$(i4).val(),
+                leagueClassPersonalTrainerId:$(s2).val(),
+                leagueClassStatic:$(s3).val(),
+                leagueClassShujuStatic:$(i7).val()
+            },
+            success:function () {
+                window.location.href="leagueClass.html";
+            }
+        })
+    })
+
+
+
+</script>
+
+</body>
+</html>

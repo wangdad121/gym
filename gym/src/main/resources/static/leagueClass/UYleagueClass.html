@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>开始预约</title>
+    <script src="../jquery.js"></script>
+    <script src="../jquery.cookie.js"></script>
+</head>
+<body>
+<table id="table1"></table>
+<script>
+    var aa=   $.cookie("huiyuan");
+    if(aa != 0 && aa!= undefined)
+    {
+        $.ajax({
+            type:"get",
+            url:"/leagueClass/select",
+            success:function (result) {
+                var $tr1=$("<tr></tr>");
+                var $td1=$("<td></td>").text("编号");
+                var $td2=$("<td></td>").text("课程名称");
+                var $td3=$("<td></td>").text("课程类型");
+                var $td4=$("<td></td>").text("开始时间");
+                var $td5=$("<td></td>").text("结束时间");
+                var $td6=$("<td></td>").text("代课教练");
+                var $td7=$("<td></td>").text("课程状态");
+                var $td8=$("<td></td>").text("数据状态");
+                $tr1.append($td1);
+                $tr1.append($td2);
+                $tr1.append($td3);
+                $tr1.append($td4);
+                $tr1.append($td5);
+                $tr1.append($td6);
+                $tr1.append($td7);
+                $tr1.append($td8);
+                $(table1).append($tr1);
+                for (var a=0;a<result.length;a++){
+                    var leagueClass=result[a];
+                    var $tr2=$("<tr></tr>");
+                    var $td11=$("<td></td>").text(leagueClass.leagueClassNumber);
+                    var $td22=$("<td></td>").text(leagueClass.leagueClassName);
+                    var $td33=$("<td></td>").text(leagueClass.leagueClassType);
+                    var $td44=$("<td></td>").text(leagueClass.leagueClassStartTime);
+                    var $td55=$("<td></td>").text(leagueClass.leagueClassEndTime);
+                    var $td66=$("<td></td>").text(leagueClass.leagueClassPersonalTrainerName);
+                    var $td77=$("<td></td>").text(leagueClass.leagueClassStatic);
+                    var $td88=$("<td></td>").text(leagueClass.leagueClassShujuStatic);
+                    $tr2.append($td11);
+                    $tr2.append($td22);
+                    $tr2.append($td33);
+                    $tr2.append($td44);
+                    $tr2.append($td55);
+                    $tr2.append($td66);
+                    $tr2.append($td77);
+                    $tr2.append($td88);
+                    $.ajax({
+                        async:false,
+                        type:"get",
+                        url:"/userLeagueClass/selectByLidAdnUid",
+                        data:{
+                            leagueId:leagueClass.id,
+                            uId:aa
+                        },
+                        success:function (result) {
+                            console.log(result)
+                            if (result == 0){
+                                var $aa1=$("<a></a>>").text("预约");
+                                $aa1.attr("onclick","yuyue("+leagueClass.id+")");
+                                $tr2.append($aa1);
+                            }
+                        }
+                    })
+
+                    $(table1).append($tr2);
+                }
+            }
+        })
+
+
+    }else {
+        alert("请登录.............")
+        window.location.href = "/login.html";
+    }
+    //添加
+    function yuyue(qq){
+        $.ajax({
+            async:false,
+            type:"get",
+            url:"/userLeagueClass/insert",
+            data:{
+                userId:aa,
+                leagueClassId:qq
+            },
+            success:function(result){
+
+            }
+
+        })
+        window.location.reload();
+    }
+
+
+
+</script>
+</body>
+</html>
